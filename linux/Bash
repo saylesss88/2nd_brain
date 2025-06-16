@@ -1,0 +1,21 @@
+---
+id: Bash
+aliases: []
+tags: []
+---
+
+# How to Create and Execute Bash Scripts
+
+By naming convention, bash scripts end with `.sh`. However they aren't required.
+
+## Adding the Shebang
+
+Bash scripts start with a `shebang`. Shebang is a combination of `bash #` and
+`bang !` followed by the bash shell path. It tells the shell to execute it via
+the bash shell. Shebang is simply an absolute path to the bash interpreter.
+
+example:
+
+```bash
+sudo dnf install bash
+```

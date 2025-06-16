@@ -1,0 +1,7 @@
+---
+id: namelessAndSingleParameterFunctions
+aliases: []
+tags: []
+---
+
+
