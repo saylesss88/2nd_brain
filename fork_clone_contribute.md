@@ -1,8 +1,4 @@
-╭───┬────────────╮
-│ 0 │ x1b[?1049h │
-│ 1 │ >          │
-│ 2 │ /dev/tty   │
-╰───┴────────────╯# Fork, Clone, Contribute
+# Fork, Clone, Contribute
 
 - In the [Nixpkgs](https://github.com/NixOS/nixpkgs) Repository.
 
@@ -257,7 +253,7 @@ git push origin master
 
 Addressing the Many Branches
 
-- No need to manage all branches: The nixos-branches are just metadata from
+- No need to manage all branches: The `nixos-branches` are just metadata from
   upstream. You only check out the one you need (e.g., `master` or
   `nixos-24.11`).
 
