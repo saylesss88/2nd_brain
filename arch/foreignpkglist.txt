@@ -1,0 +1,6 @@
+codelldb-bin
+librewolf-bin
+nodejs-cspell
+paru-bin
+paru-bin-debug
+safe-rm

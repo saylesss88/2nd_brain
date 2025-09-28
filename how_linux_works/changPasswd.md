@@ -1,0 +1,5 @@
+---
+id: changPasswd
+aliases: []
+tags: []
+---

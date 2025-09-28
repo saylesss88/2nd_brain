@@ -1,0 +1,46 @@
+# Basic Package Management
+nix-shell -p <package>  # Opens a shell with a package
+# Example: nix-shell -p hello
+
+nix-env -iA nixpkgs.<package>  # Installs a package
+# Example: nix-env -iA nixpkgs.neovim
+
+nix-env -uA nixpkgs.<package>  # Upgrades a package
+# Example: nix-env -uA nixpkgs.neovim
+
+nix-env -e <package>  # Erases a package
+# Example: nix-env -e neovim
+
+nix-env -q  # Lists installed packages
+
+nix-build nixpkgs.<package>  # Builds a package
+# Example: nix-build nixpkgs.firefox
+
+nix-store --gc  # Garbage collection
+
+# NixOS Specific Commands
+sudo nixos-rebuild switch  # Rebuilds NixOS
+sudo nixos-rebuild boot # Rebuilds NixOS for next boot
+sudo nixos-rebuild dry-run  # Simulates a rebuild
+
+nixos-option <option>  # Displays NixOS option info
+# Example: nixos-option services.openssh.enable
+
+nixos-search <keyword>  # Searches NixOS options
+# Example: nixos-search firewall
+
+# Home Manager Commands
+home-manager switch  # Applies Home Manager config
+home-manager build # Builds Home manager config
+home-manager edit # Opens Home manager config in editor
+
+# Nix Development and Debugging
+nix repl  # Opens a Nix REPL
+# Example: nix repl then inside the repl nixpkgs.hello.outPath
+
+nix eval <expression>  # Evaluates a Nix expression
+# Example: nix eval 'nixpkgs.hello.hello'
+
+nix flake <command> # Used for managing nix flakes.
+# Example: nix flake check, nix flake update
+

@@ -1,0 +1,193 @@
+{
+  "main": {
+    "id": "c2b0a2c763387bc8",
+    "type": "split",
+    "children": [
+      {
+        "id": "95e0510e2a4d2455",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "71fd08df0251f635",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "nvchad/Chadrc.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Chadrc"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "cb7f85151afd216c",
+    "type": "split",
+    "children": [
+      {
+        "id": "575c48a57dc48330",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "635a0d7bc96902ce",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "c0dd480d21e0778c",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "dfb915629547ea1f",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "3f8e285909173e3c",
+    "type": "split",
+    "children": [
+      {
+        "id": "564f2b9eb709339b",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "177fa3470254ba41",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "nvchad/Chadrc.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for Chadrc"
+            }
+          },
+          {
+            "id": "6ac06417668e7b2f",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "nvchad/Chadrc.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Chadrc"
+            }
+          },
+          {
+            "id": "28d2646a24ca18a7",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "347d119a7ad6e827",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "nvchad/Chadrc.md"
+              },
+              "icon": "lucide-list",
+              "title": "Outline of Chadrc"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "71fd08df0251f635",
+  "lastOpenFiles": [
+    "nvim/Conform.md",
+    "linux/Variables and data types in Bash.md",
+    "lua/lua_basics.md~",
+    "building_a_second_brain/Distill Find the Essence.md~",
+    "nvim/1721307721-clean-lspconfig-syntax.md",
+    "building_a_second_brain/Distill Find the Essence.md",
+    "nvim/Vim Jump List.md",
+    "building_a_second_brain/Choosing Capture Tools.md",
+    "git/vim-fugitive.md",
+    "zed",
+    "templates",
+    "home/jr/vaults/personal/daily_notes/2024-07-05.md",
+    "nvim/obsidian_templates.md",
+    "fedora/LazyGit Fedora Install Instructions.md",
+    "alacritty/alacritty install & dependencies.md",
+    "alacritty",
+    "fedora/nmap commands.md",
+    "fedora/sqlite3_install.md",
+    "Welcome.md",
+    "vim-markdown.md",
+    "string_to_int.md",
+    "etl_pipeline.md",
+    "hellogo.md",
+    "docker_install.md",
+    "fedora/eza install.md"
+  ]
+}
