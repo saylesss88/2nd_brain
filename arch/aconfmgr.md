@@ -11,6 +11,8 @@ tags:
 
 First run:
 
+speling mistake.
+
 Run `aconfmgr save` to transcribe the system's configuration to the
 configuration directory.
 

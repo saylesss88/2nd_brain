@@ -40,19 +40,11 @@ Writing SecureBoot private key to /etc/kernel/secure-boot-private-key.pem
 Writing SecureBoot certificate to /etc/kernel/secure-boot-certificate.pem
 ```
 
-Configure kernel-install and mkinitcpio to use UKI layout:
-
-Create `/etc/kernel/install.conf`:
-
-```conf
-layout=uki
-uki_generator=systemd-ukify
-```
-
 Add or modify the `BINARIES` line in `/etc/mkinitcpio.conf`:
 
 ```conf
-BINARIES=(/usr/lib/systemd/ukify)
+BINARIES=(/usr/bin/cryptsetup)
+HOOKS=(base systemd autodetect microcode modconf kms keyboard keymap consolefont sd-vconsole block sd-encrypt filesystems fsck)
 ```
 
 This ensures kernels are installed as signed UKIs
