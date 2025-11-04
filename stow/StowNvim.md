@@ -42,6 +42,8 @@ ls -l ~/.zshrc
 
 ## Keyd
 
+> Didn't work
+
 ```bash
 cd ~/.dotfiles
 mkdir -p etc/keyd
