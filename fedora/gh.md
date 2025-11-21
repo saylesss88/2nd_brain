@@ -1,9 +1,11 @@
 # gh
+
 #git
 
 ## Work seamlessly with GitHub from the command line
 
-*Core commands*
+_Core commands_
+
 - gh auth
 - gh browse
 - gh codespace
@@ -15,12 +17,14 @@
 - gh release
 - gh repo
 
-*GitHub Actions commands*
+_GitHub Actions commands_
+
 - gh cache
 - gh run
 - gh workflow
 
-*Additional commands*
+_Additional commands_
+
 - gh alias
 - gh api
 - gh attestation
@@ -36,11 +40,6 @@
 - gh status
 - gh variable
 
-*Options*
-`--version`
-Show gh version
+_Options_ `--version` Show gh version
 
-*Examples*
-`gh issue create`
-`gh repo clone cli/cli`
-`gh pr checkout 321`
+_Examples_ `gh issue create` `gh repo clone cli/cli` `gh pr checkout 321`

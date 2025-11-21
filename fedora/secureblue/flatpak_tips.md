@@ -132,3 +132,9 @@ run0 systemctl daemon-reload
 run0 systemctl enable flatpak-update.timer
 run0 systemctl start flatpak-update.timer
 ```
+
+🤤
+
+## Resources
+
+- [When Flatpaks sandbox cracks](https://www.linuxjournal.com/content/when-flatpaks-sandbox-cracks-real-life-security-issues-beyond-ideal)

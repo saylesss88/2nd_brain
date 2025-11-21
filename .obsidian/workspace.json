@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "fedora/secureblue/change_default_shell.md",
+                "file": "fedora/secureblue/secureblue.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "change_default_shell"
+              "title": "secureblue"
             }
           }
         ]
@@ -169,8 +169,11 @@
   },
   "active": "71fd08df0251f635",
   "lastOpenFiles": [
-    "fedora/secureblue/flatpak_tips.mdTpZlft.bck",
+    "fedora/secureblue/symlink_shortcuts.md",
+    "fedora/secureblue/SELinux.md",
     "fedora/secureblue/cgroups.md",
+    "fedora/secureblue/change_default_shell.md",
+    "fedora/secureblue/flatpak_tips.mdTpZlft.bck",
     "fedora/flatpak/configuring_helix_languages.md",
     "fedora/flatpak/configuring_flatpak_neovim.md",
     "nvchad/Chadrc.md",
@@ -197,7 +200,6 @@
     "string_to_int.md",
     "etl_pipeline.md",
     "hellogo.md",
-    "docker_install.md",
-    "fedora/eza install.md"
+    "docker_install.md"
   ]
 }

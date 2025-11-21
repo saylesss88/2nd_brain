@@ -22,6 +22,7 @@ Manage your `.zshrc` with chezmoi:
 
 ```bash
 chezmoi add ~/.zshrc
+chezmoi add ~/.var/app/com.helix_editor.Helix/config/helix
 chezmoi edit ~/.zshrc
 ```
 
@@ -62,6 +63,15 @@ Finally, exit the shell in the source directory to return to where you were:
 
 ```bash
 exit
+```
+
+## Usage
+
+```bash
+chezmoi add ~/.gitconfig --template
+chezmoi add ~/.ssh/id_ed25519 --encrypt
+chezmoi add ~/.vim --recursive
+chezmoi add ~/.oh-my-zsh --exact --recursive
 ```
 
 [[usingChezmoiAcrossMultipleMachines.md]]

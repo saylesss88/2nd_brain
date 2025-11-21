@@ -47,3 +47,40 @@ apps, and bubblejail.
 ```bash
 ujust toggle-unconfined-domain-userns-creation
 ```
+
+## Pin Deployment
+
+OSTree allows you to pin deployments:
+
+```bash
+# 0 is the first deployment listed by `rpm-ostree status`
+sudo ostree admin pin 0
+```
+
+Verify that you have pinned your deployment of choice with:
+
+```bash
+rpm-ostree status
+```
+
+Check if updates are available:
+
+```bash
+rpm-ostree upgrade --check
+# Upgrade to latest
+rpm-ostree upgrade
+```
+
+Make the previous deployment the default boot entry:
+
+```bash
+rpm-ostree rollback
+# Remove the previous deployment
+rpm-ostree cleanup --rollback
+```
+
+Diff
+
+```bash
+rpm-ostree db diff <COMMIT1> <COMMIT2>
+```
