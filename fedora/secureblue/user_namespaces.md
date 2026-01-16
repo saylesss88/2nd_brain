@@ -22,3 +22,5 @@ need to use any other software that requires user namespace creation privileges
 (e.g., Bubblejail), you can enable it with ujust
 toggle-unconfined-domain-userns-creation. But keep in mind that this is a
 security degradation.
+
+- [RedHat user_namespaces & containers](https://access.redhat.com/articles/5946151)

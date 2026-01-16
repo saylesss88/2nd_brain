@@ -1,3 +1,16 @@
+- secureblue sets Podman's container policy to **reject by default**, with only
+  a small allowlist (often requiring signature verification), so pulls commonly
+  fail with "Source image rejected ... rejected by policy".
+
+- `rust:1.85-slim` is a short name Podman resolves to Docker Hub, so you need to
+  explicitly trust that scope or switch to an allowed registry.
+
+```bash
+run0 podman image trust set -t accept docker.io/library/rust
+```
+
+---
+
 # Intro to podman
 
 Containers simplify production, distribution, discoverability, and usage of

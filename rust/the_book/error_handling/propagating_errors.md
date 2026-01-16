@@ -38,8 +38,8 @@ fn read_username_from_file() -> Result<String, io::Error> {
   filled with `io::Error`.
 
 - If this function succeeds, the code that calls this function will receive an
-  `Ok` value that holds a `String` the `username` that the function reads from the
-  file.
+  `Ok` value that holds a `String` the `username` that the function reads from
+  the file.
 
 - If the function fails, the calling code will receive an `Err` value that holds
   an instance of `io::Error`

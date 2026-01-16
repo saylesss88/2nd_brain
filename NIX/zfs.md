@@ -1,3 +1,34 @@
+# ZFS Install & Impermanence
+
+Start with a minimal ISO.
+
+When creating the VM, before clicking "Finish", check the "Customize
+configuration before install" box and choose EFI Firmware > BIOS.
+
+- I used `OVMF_CODE.fd` in my testing.
+
+Format your partitions:
+
+```bash
+sudo cfdisk /dev/vda1
+```
+
+Create a 1G **EFI System** first, then a **Linux Filesystem** with the remaining
+space.
+
+For the following guide, you want `/dev/vda1` to be your EFI System, and
+`/dev/vda2` to be the Linux Filesystem.
+
+```bash
+sudo fdisk -l
+```
+
+```bash
+sudo mkfs.vfat -n EFI /dev/vda1
+```
+
+## Create your ZFS Partitions
+
 1. Create a zpool
 
 ```bash
@@ -23,6 +54,7 @@ zfs create -p -o canmount=noauto -o mountpoint=legacy rpool/local/root
 # blank snapshot (the “erase” target)
 zfs snapshot rpool/local/root@blank
 
+zfs create -p -o mountpoint=legacy rpool/local/boot
 # /nix – read-only store, must survive rollbacks
 zfs create -p -o mountpoint=legacy rpool/local/nix
 
@@ -36,8 +68,9 @@ zfs create -p -o mountpoint=legacy rpool/safe/persist
 ```bash
 mount -t zfs rpool/local/root /mnt
 
-mkdir -p /mnt/{boot,nix,home,persist}
-mount -t vfat -o umask=0077 /dev/vda1 /mnt/boot
+mkdir -p /mnt/{nix,home,persist}
+mkdir -p /mnt/boot/efi
+mount -t vfat -o umask=0077 /dev/vda1 /mnt/boot/efi
 mount -t zfs rpool/local/nix   /mnt/nix
 mount -t zfs rpool/safe/home  /mnt/home
 mount -t zfs rpool/safe/persist /mnt/persist
@@ -48,11 +81,10 @@ mount -t zfs rpool/safe/persist /mnt/persist
 ```bash
 nixos-generate-config --root /mnt
 # edit /mnt/etc/nixos/configuration.nix  (add ZFS + rollback + impermanence)
-nixos-install
-reboot
 ```
 
-Quick checklist:
+<details>
+<summary> ✔️ Quick checklist: </summary>
 
 ```bash
 # 1. pool
@@ -66,15 +98,35 @@ zfs snapshot rpool/local/root@blank
 zfs create -p -o mountpoint=legacy rpool/local/nix
 zfs create -p -o mountpoint=legacy rpool/safe/home
 zfs create -p -o mountpoint=legacy rpool/safe/persist
+# add a /boot dataset
+zfs create -p -o mountpoint=legacy rpool/local/boot
 
 # 3. mounts
 mount -t zfs rpool/local/root /mnt
-mkdir -p /mnt/{boot,nix,home,persist}
-mount -t vfat -o umask=0077 /dev/vda1 /mnt/boot
+mkdir -p /mnt/{boot,boot/efi,nix,home,persist}
+
+# /boot on ZFS
+mount -t zfs rpool/local/boot /mnt/boot
+
+# ESP on /boot/efi
+mount -t vfat -o umask=0077 /dev/vda1 /mnt/boot/efi
+
 mount -t zfs rpool/local/nix /mnt/nix
 mount -t zfs rpool/safe/home /mnt/home
 mount -t zfs rpool/safe/persist /mnt/persist
 ```
+
+</details>
+
+## Prep `configuration.nix`
+
+```bash
+head -c4 /dev/urandom | xxd -p > /tmp/rand.txt
+mkpasswd --method=yescrypt > /tmp/pass.txt
+```
+
+You will read these files into the `configuration.nix` with `:r /tmp/rand.txt`,
+etc.
 
 Edit the `/mnt/etc/nixos/configuration.nix`:
 
@@ -93,7 +145,7 @@ Edit the `/mnt/etc/nixos/configuration.nix`:
     };
     efi = {
       canTouchEfiVariables = true;   # libvirt provides /sys/firmware/efi
-      efiSysMountPoint = "/boot";    # Our 1 GiB FAT32 partition
+      efiSysMountPoint = "/boot/efi";    # Our 1 GiB FAT32 partition
     };
   };
 
@@ -118,15 +170,19 @@ Edit the `/mnt/etc/nixos/configuration.nix`:
   # ------------------------------------------------------------------
   users.users.root.initialPassword = "changeme";   # change after first login
   boot.kernelParams = [ "console=ttyS0,115200n8" ];
-  services.getty.autologin = true;                 # auto-login on serial
+
+  users.users.jr = {
+    isNormalUser = true;
+
+  }
 
   # ------------------------------------------------------------------
   # 5. (Optional) Enable SSH for post-install configuration
   # ------------------------------------------------------------------
-  services.openssh = {
-    enable = true;
-    settings.PermitRootLogin = "yes";
-  };
+  # services.openssh = {
+  #  enable = true;
+  #  settings.PermitRootLogin = "yes";
+  #};
 
   # ------------------------------------------------------------------
   # 6. Mark /persist as needed for boot (impermanence will use it later)
@@ -134,3 +190,32 @@ Edit the `/mnt/etc/nixos/configuration.nix`:
   fileSystems."/persist".neededForBoot = true;
 }
 ```
+
+```bash
+sudo mkdir /etc/nixos-secrets/passwords
+
+# 2) Create the password hash FILE
+sudo sh -c 'mkpasswd -m yescrypt "your-password" > /etc/nixos-secrets/passwords/your-user'
+
+# 3) Lock down permissions
+sudo chown root:root /etc/nixos-secrets/passwords/jr
+sudo chmod 600 /persist/passwords/jr
+```
+
+```nix
+users.mutableUsers = false;
+users.users.your-user.hashedPasswordFile = "/persist/passwords/jr";
+```
+
+```bash
+sudo nixos-install --root /mnt
+```
+
+```bash
+mkdir /imperm_test
+echo "This should be Gone after Reboot" | sudo tee /imperm_test/testfile
+ls -l /imperm_test/testfile # Verify the file exists
+cat /imperm_test/testfile # Verify content
+```
+
+Reboot and the file should no longer exist.
