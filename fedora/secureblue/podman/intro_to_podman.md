@@ -9,6 +9,29 @@
 run0 podman image trust set -t accept docker.io/library/rust
 ```
 
+Trust Debian:
+
+```bash
+# Allow specifically debian images
+run0 podman image trust set -t accept docker.io/library/debian
+# OR Allow all images from docker.io
+run0 podman image trust set -t accept docker.io
+```
+
+Inspect `/etc/containers/policy.json` to see exactly what is changing.
+
+If you are just testing and want to bypass the policy temporarily for this one
+build (though podman build flags for this are limited compared to pull):
+
+```bash
+# Pull the image first with skipped verification, then build
+podman pull --tls-verify=false docker.io/library/debian:stable-slim
+podman build --no-cache -t mdbook-nix-repl .
+```
+
+(Note: --tls-verify=false sometimes bypasses signature policy depending on the
+specific policy.json configuration, but image trust set is the correct fix.)
+
 ---
 
 # Intro to podman
