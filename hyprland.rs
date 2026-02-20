@@ -25,7 +25,7 @@ async fn set_wallpaper(img_path: &str) -> anyhow::Result<()> {
     Ok(())
 }
 
-/// Runs the main loop for hyprpaper.
+/// Runs the main loop for swww.
 ///
 /// # Errors
 ///
