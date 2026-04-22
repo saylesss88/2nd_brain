@@ -31,7 +31,6 @@ usually 60 times a second:
 
 3. **Draw**: Wipe the screen and paint the new state.
 
-Your `main.rs` implements exactly this.
 
 **Code Breakdown**
 
@@ -95,7 +94,7 @@ if event::poll(Duration::from_millis(100))?
 Terminal rendering works by painting over the old frame.
 
 `crossterm` commands are just instructions. To send them to the terminal, you
-have to "queue" them into the stdout buffer.
+have to "queue" them into the `stdout` buffer.
 
 ```rs
 // 1. Wipe the slate clean.
