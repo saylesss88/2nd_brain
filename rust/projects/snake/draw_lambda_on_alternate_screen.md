@@ -303,7 +303,7 @@ millisecond.
 
 Code:
 
-Update your main.rs to look like this. I've marked the New sections.
+Update your `main.rs` to look like this. I've marked the New sections.
 
 ```rust
 use crossterm::{
