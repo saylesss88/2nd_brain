@@ -28,6 +28,7 @@
 
 - `Space-k` — hover docs (shows the rustdoc for whatever your cursor is on)
 - `]d` / `[d` — next/previous diagnostic
+- `]f` / `[f`
 
 
 **Practical workflow for bat**

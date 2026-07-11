@@ -26,4 +26,13 @@ context.exec = [
 ]
 ```
 
+```sh
+pactl list sinks short | grep combined
+45	combined	PipeWire	float32le 2ch 48000Hz	SUSPENDED
+```
+
+```sh
+pactl set-default-sink combined
+```
+
 Open `pavucontrol` and select the combined profile.
