@@ -140,3 +140,68 @@ reference types which are entirely tracked statically, at compile time.
 
 An immutable reference to a `RefCell`s inner value (`&T`) can be obtained with
 `borrow`, and a mutable borrow (`&mut T`) can be obtained with `borrow_mut`.
+
+A `RefCell<T>` type represents single ownership over the data it holds. With
+references and `Box<T>`, the borrowing rules' invariants are enforced at compile
+time. With `RefCell<T>`, these invariants are enforced at runtime. If you break
+the rules, your program will panic and exit.
+
+Because `RefCell<T>` allows mutable borrows checked at runtime, you can mutate
+the value inside the `RefCell<T>` even when the `RefCell<T>` is immutable.
+
+## Using Interior Mutability
+
+With the standard borrowing rules, when you have an immutable value, you can't
+borrow it mutably. This won't compile:
+
+```rs
+fn main() {
+  // assign 5 to x immutably
+  let x = 5;
+  // attempt to mutably borrow an immutable variable
+  let y = &mut x;
+}
+```
+
+## Tracking Borrows at Runtime
+
+The `RefCell<T>` keeps track of how many `Ref<T>` and `RefMut<T>` smart pointers
+are currently active. Every time we call borrow, the `RefCell<T>` increases its
+count of how many immutable borrows are active. When a `Ref<T>` value goes out
+of scope, the count of immutable borrows goes down by 1. Just like the
+compile-time borrowing rules, `RefCell<T>` lets us have many immutable borrows
+or one mutable borrow at any point in time.
+
+## Allowing Multiple Owners of Mutable Data
+
+It's common to use `RefCell<T>` with `Rc<T>`. `Rc<T>` lets you have multiple
+owners of some data, but only gives immutable access to that data. If you have
+an `Rc<T>` that holds a `RefCell<T>`, you can get a value that can have multiple
+owners _and_ that you can mutate!
+
+```rs
+#[derive(Debug)]
+enum List {
+    Cons(Rc<RefCell<i32>>, Rc<List>),
+    Nil,
+}
+
+use crate::List::{Cons, Nil};
+use std::cell::RefCell;
+use std::rc::Rc;
+
+fn main() {
+    let value = Rc::new(RefCell::new(5));
+
+    let a = Rc::new(Cons(Rc::clone(&value), Rc::new(Nil)));
+
+    let b = Cons(Rc::new(RefCell::new(3)), Rc::clone(&a));
+    let c = Cons(Rc::new(RefCell::new(4)), Rc::clone(&a));
+
+    *value.borrow_mut() += 10;
+
+    println!("a after = {a:?}");
+    println!("b after = {b:?}");
+    println!("c after = {c:?}");
+}
+```
